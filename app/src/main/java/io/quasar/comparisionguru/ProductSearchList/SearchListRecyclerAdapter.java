@@ -11,6 +11,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+import io.quasar.comparisionguru.Model.Product;
 import io.quasar.comparisionguru.R;
 
 /**
@@ -40,8 +41,8 @@ public class SearchListRecyclerAdapter extends RecyclerView.Adapter<SearchListRe
     @Override
     public void onBindViewHolder(SearchListViewHolder holder, int position) {
         Product product=products.get(position);
-        holder.txt_productdesc.setText(product.getProductDesc());
-        holder.txt_productprice.setText(product.getProductPrice());
+        holder.txt_productdesc.setText(product.getName());
+        holder.txt_productprice.setText(product.getSalePrice());
 
         }
 

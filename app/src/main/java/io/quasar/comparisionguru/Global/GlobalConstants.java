@@ -12,6 +12,8 @@ public interface GlobalConstants {
 
     String BASE_URL = "http://cguru-quasar6.rhcloud.com/";
 
+    String QUERY = "query";
+
     Retrofit RETROFIT = new Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())

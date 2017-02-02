@@ -1,6 +1,7 @@
 package io.quasar.comparisionguru;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.annotation.BinderThread;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.quasar.comparisionguru.Global.GlobalConstants;
 import io.quasar.comparisionguru.Model.Product;
+import io.quasar.comparisionguru.ProductSearchList.SearchListActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -52,9 +54,11 @@ public class MainActivity extends AppCompatActivity implements GlobalConstants{
             mQueryView.requestFocus();
             return;
         }
-        showProgressDialog();
+        Intent intent = new Intent(this, SearchListActivity.class);
+        intent.putExtra(QUERY, txt);
+        startActivity(intent);
 //        callAPI(txt);
-        callStringAPI(txt);
+//        callStringAPI(txt);
     }
 
     private void callAPI(String query){
@@ -126,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements GlobalConstants{
     public void showProgressDialog() {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setMessage("Creating Patient…");
+            mProgressDialog.setMessage("Looking for best prices…");
             mProgressDialog.setIndeterminate(true);
         }
 
