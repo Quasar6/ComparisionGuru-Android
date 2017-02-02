@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements GlobalConstants{
     public ProgressDialog mProgressDialog;
     private String TAG = "MAINACTIVITY";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
