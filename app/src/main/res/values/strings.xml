@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">ComparisionGuru</string>
+
+
+    <string-array name="productdesc">
+        <item>Google Pixel</item>
+        <item>Samsug Galaxy S8</item>
+        <item>One Plus two</item>
+        <item>Iphone 7</item>
+        <item>Nokia New</item>
+        <item>Micromax</item>
+
+    </string-array>
+    <string-array name="price">
+        <item>CAD 399</item>
+        <item>CAD 299</item>
+        <item>CAD 499</item>
+        <item>CAD 599</item>
+        <item>CAD 699</item>
+        <item>CAD 799</item>
+
+
+    </string-array>
 </resources>
