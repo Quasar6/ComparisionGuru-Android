@@ -10,8 +10,21 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="io.quasar.comparisionguru.MainActivity">
 
-    <TextView
+    <EditText
+        android:id="@+id/query_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Hello World! Ask me for best price"
+        android:text="Google pixel"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_centerInParent="true"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="Search"
+        android:layout_below="@id/query_text"
+        android:layout_centerInParent="true"/>
 </RelativeLayout>
