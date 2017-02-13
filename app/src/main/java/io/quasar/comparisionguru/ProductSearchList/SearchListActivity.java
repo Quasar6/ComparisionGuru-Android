@@ -62,7 +62,7 @@ public class SearchListActivity extends AppCompatActivity implements GlobalConst
         layoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        downloadList();
+       downloadList();
     }
 
     private void downloadList(){

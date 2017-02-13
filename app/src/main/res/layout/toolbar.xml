@@ -6,8 +6,27 @@
     android:background="?attr/colorPrimary"
     android:minHeight="?attr/actionBarSize"
     android:id="@+id/toolbar"
+
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    android:layout_height="wrap_content"
+    android:layout_height="100dp"
     android:layout_width="match_parent">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ComparisonGuru"
+        android:layout_gravity="center"
+        android:textSize="30dp"
+        android:fontFamily="sans-serif-black"
+        android:textColor="#000"
+         android:id="@+id/toolbar_title" />
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/logo"
+        android:layout_marginLeft="45dp"
+        />
 
 </android.support.v7.widget.Toolbar>
