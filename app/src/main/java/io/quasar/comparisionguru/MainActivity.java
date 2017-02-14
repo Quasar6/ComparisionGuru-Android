@@ -3,8 +3,12 @@ package io.quasar.comparisionguru;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.BinderThread;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -38,12 +42,43 @@ public class MainActivity extends AppCompatActivity implements GlobalConstants{
     public ProgressDialog mProgressDialog;
     private String TAG = "MAINACTIVITY";
 
+    AppBarLayout appBarLayout;
+Toolbar toolbar;
+    RecyclerView recyclerView;
+    RecyclerView.Adapter adapter;
+    RecyclerView.LayoutManager layoutManager;
+    String[] productdesc,productprice;
+    ArrayList<Product> arrayList=new ArrayList<Product>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+
+        recyclerView=(RecyclerView)findViewById(R.id.rv_sponsoredlist);
+        productdesc=getResources().getStringArray(R.array.productdesc);
+        productprice=getResources().getStringArray(R.array.price);
+        toolbar=(Toolbar)findViewById(R.id.toolbar);
+     //   setSupportActionBar(toolbar);
+
+        int i=0;
+        for(String pname :productdesc)
+        {
+            Product dataprovider=new Product(pname,productprice[i]);
+            arrayList.add(dataprovider);
+            i++;
+        }
+
+        adapter=new SponsoredListRecyclerAdapter(arrayList,this);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
     }
 
     @OnClick(R.id.search)
@@ -51,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements GlobalConstants{
         String txt = mQueryView.getText().toString();
         if(txt.isEmpty()){
             mQueryView.setError("Please type in Someting");
-            mQueryView.requestFocus();
+            //mQueryView.requestFocus();
             return;
         }
         Intent intent = new Intent(this, SearchListActivity.class);
@@ -121,6 +156,10 @@ public class MainActivity extends AppCompatActivity implements GlobalConstants{
             }
         });
     }
+
+    ///Extra Method//
+
+
 
     private void showToast(String msg){
         hideProgressDialog();

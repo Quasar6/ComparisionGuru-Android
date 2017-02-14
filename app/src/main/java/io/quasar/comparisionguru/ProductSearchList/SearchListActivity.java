@@ -52,7 +52,7 @@ public class SearchListActivity extends AppCompatActivity implements GlobalConst
         }
        //ToolbarSet
         toolbar=(Toolbar)findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+       // setSupportActionBar(toolbar);
 
         recyclerView=(RecyclerView)findViewById(R.id.rv_searchlist);
         productdesc=getResources().getStringArray(R.array.productdesc);
@@ -62,7 +62,7 @@ public class SearchListActivity extends AppCompatActivity implements GlobalConst
         layoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        downloadList();
+       downloadList();
     }
 
     private void downloadList(){
