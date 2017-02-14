@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ScrollView01"
     android:layout_width="fill_parent"
+    android:background="@color/colorPrimary"
     android:layout_height="fill_parent" >
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -22,12 +23,17 @@
         </include>
     </android.support.design.widget.AppBarLayout>
 
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="3dp"
+        android:layout_below="@+id/appbar"
+        android:background="#393b39" />
 
     <EditText
         android:id="@+id/query_text"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:hint="Hello World! Ask me for best price"
         android:text="Google pixel"
         android:layout_below="@id/appbar"
@@ -36,7 +42,6 @@
         android:layout_marginBottom="20dp"
         android:layout_marginRight="15dp"
         android:layout_centerVertical="true"
-
         android:ellipsize="start"
         android:gravity="center"
 
@@ -47,9 +52,15 @@
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:text="Search"
+        android:layout_marginBottom="20dp"
+        android:textStyle="bold"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:textColor="#fff"
+        android:background="#393b39"
         android:layout_below="@id/query_text"
         android:layout_centerInParent="true"/>
 
@@ -58,8 +69,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/rv_sponsoredlist"
-        android:paddingTop="15dp"
-        android:layout_marginTop="450dp"
+        android:layout_marginTop="20dp"
+      android:layout_below="@+id/search"
          >
 
     </android.support.v7.widget.RecyclerView>

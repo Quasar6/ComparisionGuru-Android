@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/rv_searchlist"
-        android:paddingTop="55dp"
+        android:layout_marginTop="100dp"
         android:layout_below="@+id/id_appbar2"
         >
 
