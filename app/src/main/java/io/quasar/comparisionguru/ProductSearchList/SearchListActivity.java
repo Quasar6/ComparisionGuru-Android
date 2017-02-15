@@ -23,7 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.quasar.comparisionguru.Global.GlobalConstants;
+import io.quasar.comparisionguru.Model.Product;
 import io.quasar.comparisionguru.R;
+import io.quasar.comparisionguru.SponsoredListRecyclerAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,6 +39,7 @@ public class SearchListActivity extends AppCompatActivity implements GlobalConst
     RecyclerView.LayoutManager layoutManager;
     String[] productdesc,productprice;
     String query;
+    ArrayList<Product> arrayList=new ArrayList<Product>();
 
     public ProgressDialog mProgressDialog;
     private String TAG = "SearchListActivity";
@@ -57,17 +60,29 @@ public class SearchListActivity extends AppCompatActivity implements GlobalConst
         recyclerView=(RecyclerView)findViewById(R.id.rv_searchlist);
         productdesc=getResources().getStringArray(R.array.productdesc);
         productprice=getResources().getStringArray(R.array.price);
+        int i=0;
+        for(String pname :productdesc)
+        {
+            Product dataprovider=new Product(pname,productprice[i]);
+            arrayList.add(dataprovider);
+            i++;
+        }
 
+//        adapter=new SearchListRecyclerAdapter(arrayList,this);
         recyclerView.setHasFixedSize(true);
-        layoutManager=new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
 
-       downloadList();
+
+         layoutManager=new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        //recyclerView.setAdapter(adapter);
+
+      // downloadList();
     }
 
     private void downloadList(){
         showProgressDialog();
         Call<String> call = CHEAPEST_PRICE_API.getProductStringList(query);
+        showToast(query);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
