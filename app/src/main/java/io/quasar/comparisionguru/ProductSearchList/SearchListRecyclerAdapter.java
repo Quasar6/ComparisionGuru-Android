@@ -1,6 +1,7 @@
 package io.quasar.comparisionguru.ProductSearchList;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +47,8 @@ public class SearchListRecyclerAdapter extends RecyclerView.Adapter<SearchListRe
         Product product = products.get(position);
         holder.txt_productdesc.setText(product.getName());
         holder.txt_productprice.setText(product.getPrice());
-        Glide.with(ctx).load(product.getImageURL()).into(holder.mProductImage);
+        holder.txt_currency.setText(product.getCurrency());
+        Glide.with(ctx).load(product.getImageURL()).error(Drawable.createFromPath("@drawable/default_image.jpeg")).into(holder.mProductImage);
     }
 
     @Override
@@ -61,6 +63,8 @@ public class SearchListRecyclerAdapter extends RecyclerView.Adapter<SearchListRe
         TextView txt_productdesc;
         @BindView(R.id.txtprice)
         TextView txt_productprice;
+        @BindView(R.id.txtdollar)
+        TextView txt_currency;
 
         public SearchListViewHolder(View view) {
             super(view);
