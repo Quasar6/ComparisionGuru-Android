@@ -60,13 +60,13 @@ public class SearchListActivity extends AppCompatActivity implements GlobalConst
         recyclerView=(RecyclerView)findViewById(R.id.rv_searchlist);
         productdesc=getResources().getStringArray(R.array.productdesc);
         productprice=getResources().getStringArray(R.array.price);
-        int i=0;
-        for(String pname :productdesc)
-        {
-            Product dataprovider=new Product(pname,productprice[i]);
-            arrayList.add(dataprovider);
-            i++;
-        }
+//        int i=0;
+//        for(String pname :productdesc)
+//        {
+//            Product dataprovider=new Product(pname,productprice[i]);
+//            arrayList.add(dataprovider);
+//            i++;
+//        }
 
 //        adapter=new SearchListRecyclerAdapter(arrayList,this);
         recyclerView.setHasFixedSize(true);
@@ -76,16 +76,16 @@ public class SearchListActivity extends AppCompatActivity implements GlobalConst
         recyclerView.setLayoutManager(layoutManager);
         //recyclerView.setAdapter(adapter);
 
-      // downloadList();
+       downloadList();
     }
 
     private void downloadList(){
         showProgressDialog();
-        Call<String> call = CHEAPEST_PRICE_API.getProductStringList(query);
+        Call<ArrayList<Product>> call = CHEAPEST_PRICE_API.getProductList(query);
         showToast(query);
-        call.enqueue(new Callback<String>() {
+        call.enqueue(new Callback<ArrayList<Product>>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<ArrayList<Product>> call, Response<ArrayList<Product>> response) {
                 if (!response.isSuccessful()) {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
@@ -98,18 +98,15 @@ public class SearchListActivity extends AppCompatActivity implements GlobalConst
                     return;
                 }
                 hideProgressDialog();
-                String s = response.body();
-                JsonObject jsonObject = new JsonParser().parse(s).getAsJsonObject();
-                Type listType = new TypeToken<List<io.quasar.comparisionguru.Model.Product>>(){}.getType();
-                ArrayList<io.quasar.comparisionguru.Model.Product> myModelList = new Gson().fromJson(jsonObject.getAsJsonArray("products"), listType);
-                populateList(myModelList);
-                Log.d(TAG,"Number pf products >>> "+myModelList.size());
-                Log.d(TAG,"Number pf products string>>> "+s);
+                ArrayList<Product> products = response.body();
+                Log.d(TAG, "Number pf products >>> " + products.size());
+                populateList(products);
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<ArrayList<Product>> call, Throwable t) {
                 showToast("Soory unable to fetch results");
+
             }
         });
     }

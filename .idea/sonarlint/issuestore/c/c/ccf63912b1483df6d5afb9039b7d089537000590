@@ -1,0 +1,10 @@
+
+vsquid:S1488"bImmediately return this expression instead of assigning it to the temporary variable "viewHolder".(§¸‰+
+vsquid:S00116"[Rename this field "txt_productprice" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(çø¡üÿÿÿÿ
+nsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(È’ş€
+squid:S1319"sThe type of the "products" object should be an interface such as "List" rather than the implementation "ArrayList".(ıÑ¯öıÿÿÿÿ
+nsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(È’ş€
+Tsquid:UselessImportCheck"-Remove this unused import 'org.w3c.dom.Text'.(¶Äè‹şÿÿÿÿ
+rsquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(¦©¦ıÿÿÿÿ
+ˆsquid:S1319"sThe type of the "products" object should be an interface such as "List" rather than the implementation "ArrayList".(­Æû›
+psquid:S00116"ZRename this field "txt_productdesc" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¤™¤•
