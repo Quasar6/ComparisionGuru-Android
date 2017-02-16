@@ -4,10 +4,8 @@
     android:id="@+id/activity_search_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:background="#f4f4f4"
     tools:context="io.quasar.comparisionguru.ProductSearchList.SearchListActivity">
-
-
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -24,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/rv_searchlist"
-        android:paddingTop="50dp"
+        android:layout_marginTop="100dp"
         android:layout_below="@+id/id_appbar2"
         >
 

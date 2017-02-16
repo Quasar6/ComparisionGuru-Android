@@ -13,9 +13,9 @@ import retrofit2.http.Path;
 
 public interface CheapestPrice {
 
-    @GET("cheapest/bestbuy/{query}")
+    @GET("cheapest/{query}")
     Call<ArrayList<Product>> getProductList(@Path("query") String query);
 
-    @GET("cheapest/bestbuy/{query}")
+    @GET("cheapest/{query}")
     Call<String> getProductStringList(@Path("query") String query);
 }
