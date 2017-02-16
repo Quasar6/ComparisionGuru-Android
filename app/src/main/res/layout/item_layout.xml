@@ -44,6 +44,15 @@
             android:layout_toRightOf="@+id/productimage"
             android:id="@+id/txtproductdesc"
             />
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:id="@+id/shopname"
+             android:layout_below="@+id/txtproductdesc"
+            android:background="@drawable/walmart"
+            android:layout_toRightOf="@+id/productimage"
+            android:layout_marginBottom="10dp"
+            />
 
         <TextView
             android:layout_width="match_parent"
@@ -59,7 +68,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="85dp"
             android:maxLines="1"
-            android:text="$" />
+            android:text="" />
 
         <TextView
             android:layout_width="match_parent"
