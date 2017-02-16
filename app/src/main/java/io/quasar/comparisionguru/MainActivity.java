@@ -2,10 +2,9 @@ package io.quasar.comparisionguru;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.annotation.BinderThread;
+import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -34,21 +33,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements GlobalConstants{
-
-    @BindView(R.id.query_text)
-    EditText mQueryView;
+public class MainActivity extends AppCompatActivity implements GlobalConstants {
 
     public ProgressDialog mProgressDialog;
-    private String TAG = "MAINACTIVITY";
-
+    @BindView(R.id.query_text)
+    EditText mQueryView;
     AppBarLayout appBarLayout;
-Toolbar toolbar;
+    Toolbar toolbar;
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     RecyclerView.LayoutManager layoutManager;
-    String[] productdesc,productprice;
-    ArrayList<Product> arrayList=new ArrayList<Product>();
+    String[] productdesc, productprice;
+    ArrayList<Product> arrayList = new ArrayList<Product>();
+    private String TAG = "MAINACTIVITY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,21 +54,20 @@ Toolbar toolbar;
         ButterKnife.bind(this);
 
 
-        recyclerView=(RecyclerView)findViewById(R.id.rv_sponsoredlist);
-        productdesc=getResources().getStringArray(R.array.productdesc);
-        productprice=getResources().getStringArray(R.array.price);
-        toolbar=(Toolbar)findViewById(R.id.toolbar);
-     //   setSupportActionBar(toolbar);
+        recyclerView = (RecyclerView) findViewById(R.id.rv_sponsoredlist);
+        productdesc = getResources().getStringArray(R.array.productdesc);
+        productprice = getResources().getStringArray(R.array.price);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //   setSupportActionBar(toolbar);
 
-        int i=0;
-        for(String pname :productdesc)
-        {
-            Product dataprovider=new Product(pname,productprice[i]);
+        int i = 0;
+        for (String pname : productdesc) {
+            Product dataprovider = new Product(pname, productprice[i]);
             arrayList.add(dataprovider);
             i++;
         }
 
-        adapter=new SponsoredListRecyclerAdapter(arrayList,this);
+        adapter = new SponsoredListRecyclerAdapter(arrayList, this);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -82,9 +78,9 @@ Toolbar toolbar;
     }
 
     @OnClick(R.id.search)
-    public void searchAction(){
+    public void searchAction() {
         String txt = mQueryView.getText().toString();
-        if(txt.isEmpty()){
+        if (txt.isEmpty()) {
             mQueryView.setError("Please type in Someting");
             //mQueryView.requestFocus();
             return;
@@ -96,7 +92,7 @@ Toolbar toolbar;
 //        callStringAPI(txt);
     }
 
-    private void callAPI(String query){
+    private void callAPI(String query) {
         Call<ArrayList<Product>> call = CHEAPEST_PRICE_API.getProductList(query);
         call.enqueue(new Callback<ArrayList<Product>>() {
             @Override
@@ -115,7 +111,7 @@ Toolbar toolbar;
                 }
                 hideProgressDialog();
                 ArrayList<Product> products = response.body();
-                Log.d(TAG,"Number pf products >>> "+products.size());
+                Log.d(TAG, "Number pf products >>> " + products.size());
             }
 
             @Override
@@ -125,7 +121,7 @@ Toolbar toolbar;
         });
     }
 
-    private void callStringAPI(String query){
+    private void callStringAPI(String query) {
         Call<String> call = CHEAPEST_PRICE_API.getProductStringList(query);
         call.enqueue(new Callback<String>() {
             @Override
@@ -144,10 +140,11 @@ Toolbar toolbar;
                 hideProgressDialog();
                 String s = response.body();
                 JsonObject jsonObject = new JsonParser().parse(s).getAsJsonObject();
-                Type listType = new TypeToken<List<Product>>(){}.getType();
+                Type listType = new TypeToken<List<Product>>() {
+                }.getType();
                 List<Product> myModelList = new Gson().fromJson(jsonObject.getAsJsonArray("products"), listType);
-                Log.d(TAG,"Number pf products >>> "+myModelList.size());
-                Log.d(TAG,"Number pf products string>>> "+s);
+                Log.d(TAG, "Number pf products >>> " + myModelList.size());
+                Log.d(TAG, "Number pf products string>>> " + s);
             }
 
             @Override
@@ -160,8 +157,7 @@ Toolbar toolbar;
     ///Extra Method//
 
 
-
-    private void showToast(String msg){
+    private void showToast(String msg) {
         hideProgressDialog();
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }

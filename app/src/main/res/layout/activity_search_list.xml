@@ -8,23 +8,22 @@
     tools:context="io.quasar.comparisionguru.ProductSearchList.SearchListActivity">
 
     <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
         android:id="@+id/id_appbar2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true">
 
-        <include layout = "@layout/toolbar">
-        </include>
+        <include layout="@layout/toolbar"></include>
 
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_searchlist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/rv_searchlist"
-        android:layout_marginTop="100dp"
         android:layout_below="@+id/id_appbar2"
-        >
+        android:layout_marginTop="100dp"
+        tools:listitem = "@layout/item_layout">
 
     </android.support.v7.widget.RecyclerView>
 

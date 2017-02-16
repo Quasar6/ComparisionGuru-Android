@@ -38,7 +38,7 @@ public class SponsoredListRecyclerAdapter extends RecyclerView.Adapter<Sponsored
     public void onBindViewHolder(SponsoredListViewHolder holder, int position) {
         Product product=products.get(position);
         holder.pname.setText(product.getName());
-        holder.pprice.setText(product.getSalePrice());
+        holder.pprice.setText(product.getPrice());
 
     }
 

@@ -5,12 +5,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.quasar.comparisionguru.Model.Product;
 import io.quasar.comparisionguru.R;
 
@@ -18,10 +21,10 @@ import io.quasar.comparisionguru.R;
  * Created by prashantn.pol on 2017-02-01.
  */
 
-public class SearchListRecyclerAdapter extends RecyclerView.Adapter<SearchListRecyclerAdapter.SearchListViewHolder>{
+public class SearchListRecyclerAdapter extends RecyclerView.Adapter<SearchListRecyclerAdapter.SearchListViewHolder> {
 
 
-    ArrayList<Product> products =new ArrayList<Product>();
+    ArrayList<Product> products = new ArrayList<Product>();
     Context ctx;
 
     public SearchListRecyclerAdapter(ArrayList<Product> products, Context ctx) {
@@ -32,43 +35,36 @@ public class SearchListRecyclerAdapter extends RecyclerView.Adapter<SearchListRe
 
     @Override
     public SearchListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout,parent,false);
-        SearchListViewHolder viewHolder=new SearchListViewHolder(view,products,ctx);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
+        SearchListViewHolder viewHolder = new SearchListViewHolder(view);
         return viewHolder;
 
     }
 
     @Override
     public void onBindViewHolder(SearchListViewHolder holder, int position) {
-        Product product=products.get(position);
+        Product product = products.get(position);
         holder.txt_productdesc.setText(product.getName());
-        holder.txt_productprice.setText(product.getSalePrice());
-
-        }
+        holder.txt_productprice.setText(product.getPrice());
+        Glide.with(ctx).load(product.getImageURL()).into(holder.mProductImage);
+    }
 
     @Override
     public int getItemCount() {
         return products.size();
     }
 
-    public  static class SearchListViewHolder extends RecyclerView.ViewHolder
-    {
+    public static class SearchListViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.productimage)
+        ImageView mProductImage;
+        @BindView(R.id.txtproductdesc)
         TextView txt_productdesc;
+        @BindView(R.id.txtprice)
         TextView txt_productprice;
-        ArrayList<Product> products=new ArrayList<Product>();
-        Context ctx;
 
-        public SearchListViewHolder(View view, ArrayList<Product> products, Context ctx) {
+        public SearchListViewHolder(View view) {
             super(view);
-            txt_productdesc=(TextView)view.findViewById(R.id.txtproductdesc);
-            txt_productprice=(TextView)view.findViewById(R.id.txtprice);
-
-            this.products = products;
-            this.ctx = ctx;
-        }
-
-        public SearchListViewHolder(View itemView) {
-            super(itemView);
+            ButterKnife.bind(this, view);
         }
     }
 }
