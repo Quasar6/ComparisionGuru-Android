@@ -1,6 +1,7 @@
 package io.quasar.comparisionguru.ProductSearchList;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.quasar.comparisionguru.Model.Product;
+import io.quasar.comparisionguru.ProductDetails.ProductDetails;
 import io.quasar.comparisionguru.R;
 
 /**
@@ -38,6 +41,16 @@ public class SearchListRecyclerAdapter extends RecyclerView.Adapter<SearchListRe
     public SearchListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
         SearchListViewHolder viewHolder = new SearchListViewHolder(view);
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent =new Intent(ctx, ProductDetails.class);
+                ctx.startActivity(intent);
+
+             //   Toast.makeText(ctx,"test",Toast.LENGTH_LONG).show();
+            }
+        });
         return viewHolder;
 
     }
