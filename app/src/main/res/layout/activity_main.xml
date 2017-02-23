@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/appbar">
 
-        <include layout="@layout/toolbar"
+        <include layout="@layout/mainpage_toolbar"
             >
 
         </include>
@@ -27,7 +27,7 @@
         android:layout_width="fill_parent"
         android:layout_height="3dp"
         android:layout_below="@+id/appbar"
-        android:background="#393b39" />
+        android:background="#fff" />
 
     <EditText
         android:id="@+id/query_text"
@@ -64,12 +64,20 @@
         android:layout_below="@id/query_text"
         android:layout_centerInParent="true"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         android:textSize="18dp"
+        android:paddingLeft="10dp"
+        android:layout_below="@id/search"
+        android:text="Frequently Browsed"/>
+
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/rv_sponsoredlist"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
       android:layout_below="@+id/search"
          >
 

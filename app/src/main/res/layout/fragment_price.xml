@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/relative1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff">
+
+
+        <ImageView
+            android:id="@+id/productbigimage"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:maxWidth="200dp"
+            android:src="@drawable/phone2" />
+
+
+        <TextView
+            android:id="@+id/productdesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/productbigimage"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:text="Google Pixel 32GB"
+             />
+
+        <View
+            style="@style/Divider"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_below="@id/productbigimage" />
+
+        <TextView
+            android:id="@+id/bestprice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/productdesc"
+            android:padding="10dp"
+            android:text="BEST PRICE"
+            android:textSize="13dp" />
+
+        <TextView
+            android:id="@+id/bestpricetext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/productdesc"
+            android:layout_marginTop="20dp"
+            android:padding="10dp"
+            android:text="CAD 299"
+            android:textSize="22dp"
+            android:textStyle="bold"
+            android:textColor="#5959db"/>
+
+        <View
+            style="@style/Divider"
+            android:layout_below="@id/productdesc" />
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="#fff"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/relative1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/comparepricetext"
+            android:paddingBottom="10dp"
+            android:layout_height="wrap_content"
+            android:text="COMPARE PRICE" />
+        <View
+            style="@style/Divider"
+            android:layout_below="@id/comparepricetext" />
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
