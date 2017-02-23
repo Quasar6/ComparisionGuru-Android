@@ -28,6 +28,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.quasar.comparisionguru.Global.GlobalConstants;
 import io.quasar.comparisionguru.Model.Product;
+import io.quasar.comparisionguru.ProductDetails.ProductDetails;
 import io.quasar.comparisionguru.ProductSearchList.SearchListActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements GlobalConstants {
             //mQueryView.requestFocus();
             return;
         }
-        Intent intent = new Intent(this, SearchListActivity.class);
+        Intent intent = new Intent(this, ProductDetails.class);
         intent.putExtra(QUERY, txt);
         startActivity(intent);
 //        callAPI(txt);
