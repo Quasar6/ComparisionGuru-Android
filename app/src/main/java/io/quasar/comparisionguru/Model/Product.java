@@ -8,6 +8,7 @@ public class Product {
     private String id;
     private String name;
     private String price;
+    private String salePrice;
     private String imageURL;
     private String url;
     private String currency;
@@ -19,10 +20,11 @@ public class Product {
         this.price = price;
     }
 
-    public Product(String id, String name, String price, String imageURL, String url, String currency, String store, String category) {
+    public Product(String id, String name, String price, String salePrice, String imageURL, String url, String currency, String store, String category) {
         this.id = id;
         this.name = name;
         this.price = price;
+        this.salePrice = salePrice;
         this.imageURL = imageURL;
         this.url = url;
         this.currency = currency;
@@ -52,6 +54,14 @@ public class Product {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getSalePrice() {
+        return salePrice;
+    }
+
+    public void setSalePrice(String salePrice) {
+        this.salePrice = salePrice;
     }
 
     public String getImageURL() {
