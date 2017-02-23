@@ -8,7 +8,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -22,6 +24,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.quasar.comparisionguru.Global.GlobalConstants;
 import io.quasar.comparisionguru.Model.Product;
 import io.quasar.comparisionguru.R;
@@ -40,6 +44,8 @@ public class SearchListActivity extends AppCompatActivity implements GlobalConst
     String[] productdesc,productprice;
     String query;
     ArrayList<Product> arrayList=new ArrayList<Product>();
+    @BindView(R.id.progressBar)
+    ProgressBar mProgressBar;
 
     public ProgressDialog mProgressDialog;
     private String TAG = "SearchListActivity";
@@ -48,7 +54,7 @@ public class SearchListActivity extends AppCompatActivity implements GlobalConst
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_list);
-
+        ButterKnife.bind(this);
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null){
             query = bundle.getString(QUERY);
@@ -87,6 +93,7 @@ public class SearchListActivity extends AppCompatActivity implements GlobalConst
         call.enqueue(new Callback<ArrayList<Product>>() {
             @Override
             public void onResponse(Call<ArrayList<Product>> call, Response<ArrayList<Product>> response) {
+                mProgressBar.setVisibility(View.GONE);
                 if (!response.isSuccessful()) {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
@@ -107,6 +114,7 @@ public class SearchListActivity extends AppCompatActivity implements GlobalConst
             @Override
             public void onFailure(Call<ArrayList<Product>> call, Throwable t) {
                 showToast("Soory unable to fetch results");
+                mProgressBar.setVisibility(View.GONE);
 
             }
         });
