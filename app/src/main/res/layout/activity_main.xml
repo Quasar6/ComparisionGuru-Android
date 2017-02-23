@@ -2,86 +2,101 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ScrollView01"
     android:layout_width="fill_parent"
-    android:background="@color/colorPrimary"
-    android:layout_height="fill_parent" >
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
-    android:background="@color/colorPrimary"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="io.quasar.comparisionguru.MainActivity">
+    android:layout_height="fill_parent"
+    android:background="@color/colorPrimary">
 
-    <android.support.design.widget.AppBarLayout
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/appbar">
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        tools:context="io.quasar.comparisionguru.MainActivity">
 
-        <include layout="@layout/mainpage_toolbar"
-            >
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        </include>
-    </android.support.design.widget.AppBarLayout>
+            <include layout="@layout/mainpage_toolbar">
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="3dp"
-        android:layout_below="@+id/appbar"
-        android:background="#fff" />
+            </include>
+        </android.support.design.widget.AppBarLayout>
 
-    <EditText
-        android:id="@+id/query_text"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="30dp"
-        android:hint="Hello World! Ask me for best price"
-        android:text="Google pixel"
-        android:layout_below="@id/appbar"
-        android:layout_marginLeft="15dp"
-        android:background="@drawable/rounded_border_edittext"
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="15dp"
-        android:layout_centerVertical="true"
-        android:ellipsize="start"
-        android:gravity="center"
-
-        android:inputType="text"
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="3dp"
+            android:layout_below="@+id/appbar"
+            android:background="#fff" />
 
 
-        android:layout_centerInParent="false"/>
-
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/search"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="Search"
-        android:layout_marginBottom="20dp"
-        android:textStyle="bold"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
-        android:textColor="#fff"
-        android:background="#393b39"
-        android:layout_below="@id/query_text"
-        android:layout_centerInParent="true"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-         android:textSize="18dp"
-        android:paddingLeft="10dp"
-        android:layout_below="@id/search"
-        android:text="Frequently Browsed"/>
+        <EditText
+            android:id="@+id/query_text"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_below="@id/appbar"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/rounded_border_edittext"
+            android:ellipsize="start"
+            android:gravity="center"
+            android:hint="Hello World! Ask me for best price"
+            android:inputType="text"
+            android:text="Google pixel" />
 
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/rv_sponsoredlist"
-        android:layout_marginTop="30dp"
-      android:layout_below="@+id/search"
-         >
+        <LinearLayout
+            android:id="@+id/search_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/query_text"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
 
-    </android.support.v7.widget.RecyclerView>
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/search"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="3"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="#393b39"
+                android:text="Search"
+                android:textColor="#fff"
+                android:textStyle="bold" />
 
-</RelativeLayout>
+            <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/query_speech"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:layout_marginRight="15dp"
+                android:background="#393b39"
+                android:text="Search"
+                android:src="@drawable/ic_mic_white_24dp"
+                android:textColor="#fff"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/search_layout"
+            android:paddingLeft="10dp"
+            android:text="Frequently Browsed"
+            android:textSize="18dp" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_sponsoredlist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/search_layout"
+            android:layout_marginTop="30dp">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </RelativeLayout>
 </ScrollView>

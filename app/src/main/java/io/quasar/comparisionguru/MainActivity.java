@@ -1,15 +1,19 @@
 package io.quasar.comparisionguru;
 
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -22,6 +26,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +42,8 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity implements GlobalConstants {
 
     public ProgressDialog mProgressDialog;
+    @BindView(R.id.search)
+    AppCompatButton mSearchButton;
     @BindView(R.id.query_text)
     EditText mQueryView;
     AppBarLayout appBarLayout;
@@ -86,11 +93,51 @@ public class MainActivity extends AppCompatActivity implements GlobalConstants {
             //mQueryView.requestFocus();
             return;
         }
-        Intent intent = new Intent(this, ProductDetails.class);
+        Intent intent = new Intent(this, SearchListActivity.class);
         intent.putExtra(QUERY, txt);
         startActivity(intent);
 //        callAPI(txt);
 //        callStringAPI(txt);
+    }
+
+    @OnClick(R.id.query_speech)
+    public void startSpeechListner(){
+        promptSpeechInput();
+    }
+
+    private void promptSpeechInput() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
+                getString(R.string.speech_prompt));
+        try {
+            startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
+        } catch (ActivityNotFoundException a) {
+            Toast.makeText(getApplicationContext(),
+                    getString(R.string.speech_not_supported),
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case REQ_CODE_SPEECH_INPUT: {
+                if (resultCode == RESULT_OK && null != data) {
+
+                    ArrayList<String> result = data
+                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    mQueryView.setText(result.get(0));
+                    mSearchButton.callOnClick();
+                }
+                break;
+            }
+
+        }
     }
 
     private void callAPI(String query) {

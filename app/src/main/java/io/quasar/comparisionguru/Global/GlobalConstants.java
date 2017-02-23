@@ -21,4 +21,5 @@ public interface GlobalConstants {
 
     CheapestPrice CHEAPEST_PRICE_API = RETROFIT.create(CheapestPrice.class);
 
+    int REQ_CODE_SPEECH_INPUT = 100;
 }
