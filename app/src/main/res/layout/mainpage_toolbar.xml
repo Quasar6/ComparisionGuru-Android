@@ -22,10 +22,10 @@
         android:id="@+id/toolbar_title" />
 
     <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@drawable/logo"
-        android:layout_marginLeft="65dp"
+        android:layout_width="75dp"
+        android:layout_height="31dp"
+        android:background="@drawable/logolow"
+        android:layout_marginLeft="0dp"
         />
 
 </android.support.v7.widget.Toolbar>
