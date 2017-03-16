@@ -18,4 +18,7 @@ public interface CheapestPrice {
 
     @GET("cheapest/{query}")
     Call<String> getProductStringList(@Path("query") String query);
+
+    @GET("products")
+    Call<ArrayList<Product>> getFeaturedList();
 }

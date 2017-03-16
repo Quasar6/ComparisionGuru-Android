@@ -35,6 +35,7 @@ import io.quasar.comparisionguru.Global.GlobalConstants;
 import io.quasar.comparisionguru.Model.Product;
 import io.quasar.comparisionguru.ProductDetails.ProductDetails;
 import io.quasar.comparisionguru.ProductSearchList.SearchListActivity;
+import io.quasar.comparisionguru.ProductSearchList.SearchListRecyclerAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -75,21 +76,59 @@ public class MainActivity extends AppCompatActivity implements GlobalConstants {
             i++;
         }
 
-        adapter = new SponsoredListRecyclerAdapter(arrayList, this);
+
+        callFeaturedAPI();
+
+      //  recyclerView.setAdapter(adapter);
+
+    }
+
+    private void callFeaturedAPI() {
+        Call<ArrayList<Product>> call = CHEAPEST_PRICE_API.getFeaturedList();
+        call.enqueue(new Callback<ArrayList<Product>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Product>> call, Response<ArrayList<Product>> response) {
+                Log.d("RETROFIT", "response.isSuccessful() >>>>> " + response.isSuccessful());
+                if (!response.isSuccessful()) {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        Log.d("RETROFIT", "UPDATE DOCTOR RETROFIT FAILURE jObjError.getString(message) >>>>> " + jObjError.getString("message"));
+                        showToast(jObjError.getString("message"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        showToast(e.getMessage());
+                    }
+                    return;
+                }
+                hideProgressDialog();
+
+                ArrayList<Product> products = response.body();
+                populateList(products);
+                Log.d(TAG, "Number pf products >>> " + products.size());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Product>> call, Throwable t) {
+                showToast("Sorry unable to fetch results");
+            }
+        });
+    }
+
+    private void populateList(ArrayList<io.quasar.comparisionguru.Model.Product> productArrayList){
+
+        adapter = new SponsoredListRecyclerAdapter(productArrayList, this);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-
     }
-
     @OnClick(R.id.search)
     public void searchAction() {
         String txt = mQueryView.getText().toString();
         if (txt.isEmpty()) {
-            mQueryView.setError("Please type in Someting");
+            mQueryView.setError("Please type in Something");
             //mQueryView.requestFocus();
             return;
         }
@@ -164,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements GlobalConstants {
 
             @Override
             public void onFailure(Call<ArrayList<Product>> call, Throwable t) {
-                showToast("Soory unable to fetch results");
+                showToast("Sorry unable to fetch results");
             }
         });
     }
@@ -197,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements GlobalConstants {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                showToast("Soory unable to fetch results");
+                showToast("Sorry unable to fetch results");
             }
         });
     }

@@ -1,11 +1,14 @@
 package io.quasar.comparisionguru;
 
 import android.content.Context;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -37,8 +40,26 @@ public class SponsoredListRecyclerAdapter extends RecyclerView.Adapter<Sponsored
     @Override
     public void onBindViewHolder(SponsoredListViewHolder holder, int position) {
         Product product=products.get(position);
-        holder.pname.setText(product.getName());
+        holder.pname.setText(product.getName().substring(0, 17) + "...");
         holder.pprice.setText(product.getPrice());
+        String storename=product.getStore().toString();
+        if(storename.equals("bestbuy"))
+        {
+            //Toast.makeText(ctx,storename,Toast.LENGTH_LONG).show();
+
+            holder.storeimage.setImageResource(R.drawable.bestbuy);
+        }
+        else if(storename.equals("ebay"))
+        {
+            holder.storeimage.setImageResource(R.drawable.ebaylogo);
+
+        }
+        else if(storename.equals("walmart"))
+        {
+            holder.storeimage.setImageResource(R.drawable.walmart);
+
+        }
+
 
     }
 
@@ -53,12 +74,14 @@ public class SponsoredListRecyclerAdapter extends RecyclerView.Adapter<Sponsored
         TextView pprice;
         ArrayList<Product> products=new ArrayList<Product>();
         Context ctx;
+        ImageView storeimage;
+
 
         public SponsoredListViewHolder(View view, ArrayList<Product> products, Context ctx) {
             super(view);
             pname=(TextView)view.findViewById(R.id.pname);
             pprice=(TextView)view.findViewById(R.id.pprice);
-
+            storeimage =(ImageView)view.findViewById(R.id.shopname);
             this.products = products;
             this.ctx = ctx;
         }

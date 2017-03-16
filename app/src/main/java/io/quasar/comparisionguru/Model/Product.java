@@ -1,10 +1,12 @@
 package io.quasar.comparisionguru.Model;
 
+import java.io.Serializable;
+
 /**
  * Created by yatin on 01/02/17.
  */
 
-public class Product {
+public class Product implements Serializable{
     private String id;
     private String name;
     private String price;

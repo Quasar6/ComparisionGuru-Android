@@ -41,27 +41,48 @@ public class SearchListRecyclerAdapter extends RecyclerView.Adapter<SearchListRe
     public SearchListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
         SearchListViewHolder viewHolder = new SearchListViewHolder(view);
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent =new Intent(ctx, ProductDetails.class);
-                ctx.startActivity(intent);
-
-             //   Toast.makeText(ctx,"test",Toast.LENGTH_LONG).show();
-            }
-        });
         return viewHolder;
 
     }
 
     @Override
     public void onBindViewHolder(SearchListViewHolder holder, int position) {
-        Product product = products.get(position);
+        final Product product = products.get(position);
         holder.txt_productdesc.setText(product.getName());
         holder.txt_productprice.setText(product.getPrice());
         holder.txt_currency.setText(product.getCurrency());
+
+        String storename=product.getStore().toString();
+        if(storename.equals("bestbuy"))
+        {
+            //Toast.makeText(ctx,storename,Toast.LENGTH_LONG).show();
+
+            holder.storelogo.setImageResource(R.drawable.bestbuy);
+        }
+        else if(storename.equals("ebay"))
+        {
+            holder.storelogo.setImageResource(R.drawable.ebaylogo);
+
+        }
+        else if(storename.equals("walmart"))
+        {
+            holder.storelogo.setImageResource(R.drawable.walmart);
+
+        }
+
+
         Glide.with(ctx).load(product.getImageURL()).error(Drawable.createFromPath("@drawable/default_image.jpeg")).into(holder.mProductImage);
+        holder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent =new Intent(ctx, ProductDetails.class);
+                intent.putExtra("Product", product);
+                ctx.startActivity(intent);
+
+                //   Toast.makeText(ctx,"test",Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
@@ -70,6 +91,7 @@ public class SearchListRecyclerAdapter extends RecyclerView.Adapter<SearchListRe
     }
 
     public static class SearchListViewHolder extends RecyclerView.ViewHolder {
+        View mView;
         @BindView(R.id.productimage)
         ImageView mProductImage;
         @BindView(R.id.txtproductdesc)
@@ -78,10 +100,13 @@ public class SearchListRecyclerAdapter extends RecyclerView.Adapter<SearchListRe
         TextView txt_productprice;
         @BindView(R.id.txtdollar)
         TextView txt_currency;
+        @BindView(R.id.shopname)
+        ImageView storelogo;
 
-        public SearchListViewHolder(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
+        public SearchListViewHolder(View itemView) {
+            super(itemView);
+            this.mView = itemView;
+            ButterKnife.bind(this, itemView);
         }
     }
 }
