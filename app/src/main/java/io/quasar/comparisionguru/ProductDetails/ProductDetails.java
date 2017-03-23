@@ -1,5 +1,6 @@
 package io.quasar.comparisionguru.ProductDetails;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -30,7 +31,6 @@ public class ProductDetails extends AppCompatActivity {
 
         toolbar=(Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         viewPager=(ViewPager)findViewById(R.id.detailsViewpager);
         tabLayout=(TabLayout) findViewById(R.id.detailstablayout);
