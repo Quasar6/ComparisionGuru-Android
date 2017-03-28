@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_product_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    tools:context="io.quasar.comparisionguru.ProductDetails.ProductDetails">
+    tools:context="io.quasar.comparisionguru.ProductDetails.ProductDetails"
+    android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <include layout="@layout/toolbar">
-
-        </include>
+        <include layout="@layout/toolbar"/>
 
         <android.support.design.widget.TabLayout
+            android:id="@+id/detailstablayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/detailstablayout"
-            app:tabMode="fixed"
-            app:tabGravity="fill">
+            app:tabGravity="fill"
+            app:tabMode="fixed">
 
         </android.support.design.widget.TabLayout>
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
+        android:id="@+id/detailsViewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/detailsViewpager">
+        android:layout_below="@id/toolbar_layout">
 
 
     </android.support.v4.view.ViewPager>
-</RelativeLayout>
+</LinearLayout>

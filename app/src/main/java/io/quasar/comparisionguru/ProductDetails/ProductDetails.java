@@ -21,13 +21,17 @@ public class ProductDetails extends AppCompatActivity {
     ViewPager viewPager;
     TabLayout tabLayout;
     ViewPagerAdapter viewPagerAdapter;
-
-
+    boolean isFeatured;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
+
+        Bundle bundle = getIntent().getExtras();
+        if(bundle!=null){
+            isFeatured = bundle.getBoolean("isFeatured", false);
+        }
 
         toolbar=(Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -36,13 +40,14 @@ public class ProductDetails extends AppCompatActivity {
         tabLayout=(TabLayout) findViewById(R.id.detailstablayout);
         viewPagerAdapter=new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragments(new PriceFragment(),"Price");
-        viewPagerAdapter.addFragments(new SpecsFragment(),"Specs");
+        if(false) {
+            viewPagerAdapter.addFragments(new SpecsFragment(), "Specs");
+        }
+        if(isFeatured){
+            viewPagerAdapter.addFragments(new TrendFragment(),"Trends");
+        }
         viewPagerAdapter.addFragments(new ReviewsFragment(),"Reviews");
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
-
-
-
-
     }
 }

@@ -1,6 +1,7 @@
 package io.quasar.comparisionguru.Model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by yatin on 01/02/17.
@@ -16,6 +17,7 @@ public class Product implements Serializable{
     private String currency;
     private String store;
     private String category;
+    private ArrayList<Trend> trend;
 
     public Product(String name, String price) {
         this.name = name;
@@ -104,5 +106,13 @@ public class Product implements Serializable{
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public ArrayList<Trend> getTrends() {
+        return trend;
+    }
+
+    public void setTrends(ArrayList<Trend> trends) {
+        this.trend = trends;
     }
 }

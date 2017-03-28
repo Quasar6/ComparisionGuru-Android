@@ -45,9 +45,6 @@ public class PriceFragment extends Fragment {
 
         Intent intent=getActivity().getIntent();
         Product product=(Product)intent.getSerializableExtra("Product");
-        Toast.makeText(getActivity(),product.getPrice(),Toast.LENGTH_LONG).show();
-
-
 
         View view = inflater.inflate(R.layout.fragment_price, container, false);
         // Inflate the layout for this fragment
@@ -74,7 +71,7 @@ public class PriceFragment extends Fragment {
         txtprice=(TextView)view.findViewById(R.id.bestpricetext);
 
         txtprice.setText(product.getPrice());
-        txtdesc.setText(product.getName());
+//        txtdesc.setText(product.getName());
 
         return view;
     }
