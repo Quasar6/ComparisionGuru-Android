@@ -49,7 +49,11 @@ public class SearchListRecyclerAdapter extends RecyclerView.Adapter<SearchListRe
     public void onBindViewHolder(SearchListViewHolder holder, int position) {
         final Product product = products.get(position);
         holder.txt_productdesc.setText(product.getName());
-        holder.txt_productprice.setText(product.getPrice());
+        if(product.getSalePrice() != null){
+            holder.txt_productprice.setText(product.getSalePrice());
+        }else {
+            holder.txt_productprice.setText(product.getPrice());
+        }
         holder.txt_currency.setText(product.getCurrency());
 
         String storename=product.getStore().toString();
