@@ -73,8 +73,8 @@ public class PriceFragment extends Fragment {
         txtdesc=(TextView)view.findViewById(R.id.txtproductdesc);
         txtprice=(TextView)view.findViewById(R.id.bestpricetext);
 
-        txtprice.setText(product.getPrice());
-        txtdesc.setText(product.getName());
+       // txtprice.setText(product.getPrice());
+//        txtdesc.setText(product.getName());
 
         return view;
     }
