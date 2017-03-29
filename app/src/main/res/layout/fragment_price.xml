@@ -18,7 +18,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:maxWidth="200dp"
-            android:src="@drawable/phone2" />
+            android:src="@drawable/phone2"
+            android:focusableInTouchMode="true"/>
 
 
         <TextView
@@ -74,7 +75,8 @@
             android:id="@+id/rv_otherlist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lblOtherProducts"/>
+            android:layout_below="@+id/lblOtherProducts"
+            android:descendantFocusability="blocksDescendants"/>
 
     </RelativeLayout>
 

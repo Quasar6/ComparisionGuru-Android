@@ -1,5 +1,7 @@
 package io.quasar.comparisionguru.ProductDetails;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -23,9 +27,11 @@ import io.quasar.comparisionguru.R;
 public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.ViewHolder> {
 
     ArrayList<Comment> comments;
+    Context context;
 
-    public CommentListAdapter(ArrayList<Comment> comments) {
+    public CommentListAdapter(ArrayList<Comment> comments, Context context) {
         this.comments = comments;
+        this.context = context;
     }
 
     @Override
@@ -44,11 +50,19 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
             return;
         }
         holder.mUserRating.setRating(comment.getRating());
+        if(!comment.getUserImage().isEmpty()) {
+            Glide.with(context).load(comment.getUserImage()).error(Drawable.createFromPath("@drawable/ic_account_circle_black_36dp")).into(holder.mUserImage);
+        }
     }
 
     @Override
     public int getItemCount() {
         return comments.size();
+    }
+
+    public void addCommentItem(Comment comment){
+        comments.add(comment);
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

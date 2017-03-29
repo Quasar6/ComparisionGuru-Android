@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="10dp">
+        android:paddingTop="10dp"
+        android:focusableInTouchMode="true">
 
         <ImageView
             android:id="@+id/user_image"
@@ -53,6 +54,7 @@
         android:layout_below="@id/user_comment_layout"
         android:layout_marginTop="10dp"
         app:layoutManager="LinearLayoutManager"
-        tools:listitem="@layout/comment_item_layout" />
+        tools:listitem="@layout/comment_item_layout"
+        android:descendantFocusability="blocksDescendants" />
 
 </RelativeLayout>

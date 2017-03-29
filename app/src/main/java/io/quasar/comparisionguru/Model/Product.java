@@ -18,6 +18,7 @@ public class Product implements Serializable{
     private String store;
     private String category;
     private ArrayList<Trend> trend;
+    private ArrayList<Comment> reviews;
 
     public Product(String name, String price) {
         this.name = name;
@@ -114,5 +115,13 @@ public class Product implements Serializable{
 
     public void setTrends(ArrayList<Trend> trends) {
         this.trend = trends;
+    }
+
+    public ArrayList<Comment> getComments() {
+        return reviews;
+    }
+
+    public void setComments(ArrayList<Comment> comments) {
+        this.reviews = comments;
     }
 }

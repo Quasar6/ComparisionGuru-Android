@@ -67,11 +67,11 @@ public class PriceFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        txtdesc=(TextView)view.findViewById(R.id.txtproductdesc);
+        txtdesc=(TextView)view.findViewById(R.id.productdesc);
         txtprice=(TextView)view.findViewById(R.id.bestpricetext);
 
         txtprice.setText(product.getPrice());
-//        txtdesc.setText(product.getName());
+        txtdesc.setText(product.getName());
 
         return view;
     }
