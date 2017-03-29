@@ -45,7 +45,7 @@ public class PriceFragment extends Fragment {
 
         Intent intent=getActivity().getIntent();
         Product product=(Product)intent.getSerializableExtra("Product");
-        Toast.makeText(getActivity(),product.getPrice(),Toast.LENGTH_LONG).show();
+//        Toast.makeText(getActivity(),product.getPrice(),Toast.LENGTH_LONG).show();
 
 
 
