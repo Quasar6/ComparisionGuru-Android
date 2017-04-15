@@ -46,7 +46,8 @@
                 android:id="@+id/shopname"
                 android:layout_width="100dp"
                 android:layout_height="30dp"
-
+                android:scaleType="fitStart"
+                android:src="@drawable/bestbuy"
                 android:layout_below="@+id/txtproductdesc"
                 android:layout_marginBottom="10dp"
                 android:layout_toRightOf="@+id/productimage"
@@ -57,7 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txtproductdesc"
-                android:layout_marginRight="85dp"
+                android:layout_marginRight="100dp"
                 android:layout_marginTop="20dp"
                 android:layout_toRightOf="@+id/productimage"
                 android:layout_weight="1"
@@ -65,7 +66,7 @@
                 android:gravity="right"
                 android:maxLines="1"
                 android:text=""
-                android:textSize="16dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
             <TextView
