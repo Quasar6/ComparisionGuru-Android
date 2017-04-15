@@ -12,6 +12,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements GlobalConstants {
     String[] productdesc, productprice;
     ArrayList<Product> arrayList = new ArrayList<Product>();
     private String TAG = "MAINACTIVITY";
+    Button btnmic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +65,14 @@ public class MainActivity extends AppCompatActivity implements GlobalConstants {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-
+//        btnmic=(Button) findViewById(R.id.query_speech);
+//        btnmic.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                Toast.makeText(MainActivity.this,"Clicked",Toast.LENGTH_LONG).show();
+//            }
+//        });
         recyclerView = (RecyclerView) findViewById(R.id.rv_sponsoredlist);
         productdesc = getResources().getStringArray(R.array.productdesc);
         productprice = getResources().getStringArray(R.array.price);
