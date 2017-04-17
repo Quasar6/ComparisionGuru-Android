@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -64,6 +65,17 @@ public class MainActivity extends AppCompatActivity implements GlobalConstants {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        TextView txtsignIn=(TextView)findViewById(R.id.singIn);
+
+        txtsignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                Toast.makeText(MainActivity.this,"Clicked",Toast.LENGTH_LONG).show();
+            }
+        });
+
 
 //        btnmic=(Button) findViewById(R.id.query_speech);
 //        btnmic.setOnClickListener(new View.OnClickListener() {
