@@ -85,6 +85,9 @@ public class MainActivity extends AppCompatActivity implements GlobalConstants {
 //                Toast.makeText(MainActivity.this,"Clicked",Toast.LENGTH_LONG).show();
 //            }
 //        });
+
+
+
         recyclerView = (RecyclerView) findViewById(R.id.rv_sponsoredlist);
         productdesc = getResources().getStringArray(R.array.productdesc);
         productprice = getResources().getStringArray(R.array.price);

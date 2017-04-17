@@ -2,13 +2,18 @@ package io.quasar.comparisionguru;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import io.quasar.comparisionguru.Model.Product;
@@ -44,8 +49,22 @@ public class SponsoredListRecyclerAdapter extends RecyclerView.Adapter<Sponsored
         } else {
             holder.pname.setText(product.getName());
         }
-        holder.pprice.setText(product.getPrice());
+
+//        DecimalFormat form = new DecimalFormat("#.00");
+//        String FormattedText=form.format(product.getStore().toString());
+//        Toast.makeText(ctx,FormattedText,Toast.LENGTH_SHORT).show();
+
+        double pricedouble =  Double.parseDouble(product.getPrice());
+        pricedouble = Math.round(pricedouble * 100);
+        pricedouble = pricedouble/100;
+
+        holder.pprice.setText(String.valueOf(pricedouble));
+        //holder.pImage.setImageResource(product.getImageURL());
         String storename = product.getStore().toString();
+
+        Glide.with(ctx).load(product.getImageURL()).error(Drawable.createFromPath("@drawable/default_image.jpeg")).into(holder.pImage);
+
+
         if (storename.equals("bestbuy")) {
             //Toast.makeText(ctx,storename,Toast.LENGTH_LONG).show();
 
@@ -67,6 +86,8 @@ public class SponsoredListRecyclerAdapter extends RecyclerView.Adapter<Sponsored
             }
         });
 
+
+
     }
 
     @Override
@@ -80,6 +101,7 @@ public class SponsoredListRecyclerAdapter extends RecyclerView.Adapter<Sponsored
         TextView pprice;
         ArrayList<Product> products = new ArrayList<Product>();
         Context ctx;
+        ImageView pImage;
         ImageView storeimage;
 
 
@@ -89,6 +111,7 @@ public class SponsoredListRecyclerAdapter extends RecyclerView.Adapter<Sponsored
             pname = (TextView) view.findViewById(R.id.pname);
             pprice = (TextView) view.findViewById(R.id.pprice);
             storeimage = (ImageView) view.findViewById(R.id.shopname);
+            pImage=(ImageView)view.findViewById(R.id.pimage);
             this.products = products;
             this.ctx = ctx;
         }
