@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * Created by yatin on 01/02/17.
  */
 
-public class Product implements Serializable{
+public class Product implements Serializable {
     private String id;
     private String name;
     private String price;
@@ -17,6 +17,7 @@ public class Product implements Serializable{
     private String currency;
     private String store;
     private String category;
+    private String description;
     private ArrayList<Trend> trend;
     private ArrayList<Comment> reviews;
 
@@ -123,5 +124,13 @@ public class Product implements Serializable{
 
     public void setComments(ArrayList<Comment> comments) {
         this.reviews = comments;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
