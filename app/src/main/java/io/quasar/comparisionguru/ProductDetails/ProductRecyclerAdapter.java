@@ -46,6 +46,7 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
         holder.txt_pprice.setText(product.getPrice());
     }
 
+
     @Override
     public int getItemCount() {
         return products.size();

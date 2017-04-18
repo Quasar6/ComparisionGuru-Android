@@ -25,6 +25,7 @@
         android:id="@+id/pimage"
          android:layout_centerHorizontal="true"
 
+        android:background="@drawable/googlepixel"
         />
 
         <TextView
