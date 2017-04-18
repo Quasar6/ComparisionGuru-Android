@@ -2,96 +2,85 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ScrollView01"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-  >
-
+    android:layout_height="fill_parent">
 
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/activity_main"
         android:layout_width="match_parent"
-        android:background="#fff"
         android:layout_height="match_parent"
-         tools:context="io.quasar.comparisionguru.MainActivity">
+        android:background="#fff"
+        tools:context="io.quasar.comparisionguru.MainActivity">
 
-        <TextView android:id="@+id/user"
+        <Button
+            android:id="@+id/user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
             android:text="Guest"
-            android:paddingLeft="25dp"
-            android:paddingTop="10dp"
-            android:textColor="#3b46e7"
-            android:layout_alignParentLeft="true"/>
+            android:layout_margin="5dp"
+            android:padding="4dp"
+            android:background="@color/transparent"
+            android:textColor="#3b46e7" />
 
-
-
-        <TextView android:id="@+id/singIn"
+        <Button
+            android:id="@+id/singIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SignIn"
-            android:paddingRight="30dp"
-            android:textColor="#3b46e7"
-            android:paddingTop="10dp"
-            android:layout_alignParentRight="true"/>
-
-        <TextView android:id="@+id/singOut"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SignOut"
-            android:visibility="gone"
-            android:textColor="#3b46e7"
-            android:paddingRight="30dp"
-            android:paddingTop="10dp"
-            android:layout_alignParentRight="true"/>
-
-
+            android:layout_alignParentRight="true"
+            android:text="Sign In"
+            android:layout_margin="5dp"
+            android:padding="4dp"
+            android:background="@color/transparent"
+            android:textColor="#3b46e7" />
 
         <ImageView
+            android:id="@+id/newlogo"
             android:layout_width="100dp"
             android:layout_height="100dp"
-             android:layout_centerHorizontal="true"
-            android:id="@+id/newlogo"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
-              android:src="@drawable/cgogo"
-            />
+            android:src="@drawable/cgogo" />
 
         <FrameLayout
+            android:id="@+id/frame"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/newlogo"
             android:layout_marginTop="9dp"
-            android:id="@+id/frame"
-            android:layout_below="@id/newlogo"
             android:padding="5dp">
-        <EditText
-            android:id="@+id/query_text"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-             android:layout_marginBottom="20dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_below="@id/newlogo"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/rounded_border_edittext"
-            android:ellipsize="start"
-            android:gravity="center"
-             android:paddingRight="20dp"
-            android:hint="Hello World! Ask me for best price"
-            android:inputType="text"
-            android:text="Google pixel" />
+
+            <EditText
+                android:id="@+id/query_text"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_below="@id/newlogo"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/rounded_border_edittext"
+                android:ellipsize="start"
+                android:gravity="center"
+                android:hint="Hello World! Ask me for best price"
+                android:inputType="text"
+                android:paddingRight="20dp"
+                android:text="Google pixel" />
 
             <Button
                 android:id="@+id/query_speech"
                 android:layout_width="30dp"
                 android:layout_height="48dp"
-                android:paddingRight="20dp"
-                 android:layout_marginRight="30dp"
-                android:layout_marginTop="5dp"
                 android:layout_gravity="right|center_vertical"
-                android:background="@drawable/mic" />
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/mic"
+                android:paddingRight="20dp" />
 
 
-</FrameLayout>
+        </FrameLayout>
+
         <LinearLayout
             android:id="@+id/search_layout"
             android:layout_width="match_parent"
@@ -104,9 +93,9 @@
                 android:id="@+id/search"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
-                android:layout_weight="3"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
+                android:layout_weight="3"
                 android:background="#393b39"
                 android:text="Search"
                 android:textColor="#fff"

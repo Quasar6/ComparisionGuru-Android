@@ -2,9 +2,12 @@ package io.quasar.comparisionguru;
 
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
@@ -19,6 +22,21 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -36,6 +54,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.quasar.comparisionguru.Global.GlobalConstants;
 import io.quasar.comparisionguru.Model.Product;
+import io.quasar.comparisionguru.Model.User;
 import io.quasar.comparisionguru.ProductDetails.ProductDetails;
 import io.quasar.comparisionguru.ProductSearchList.SearchListActivity;
 import io.quasar.comparisionguru.ProductSearchList.SearchListRecyclerAdapter;
@@ -43,13 +62,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements GlobalConstants {
+public class MainActivity extends AppCompatActivity implements GlobalConstants,
+        GoogleApiClient.OnConnectionFailedListener {
 
+    private static final int RC_SIGN_IN = 9001;
     public ProgressDialog mProgressDialog;
     @BindView(R.id.search)
     AppCompatButton mSearchButton;
     @BindView(R.id.query_text)
     EditText mQueryView;
+    @BindView(R.id.user)
+    Button mUserText;
+    @BindView(R.id.singIn)
+    Button mSignText;
+
     AppBarLayout appBarLayout;
     Toolbar toolbar;
     RecyclerView recyclerView;
@@ -58,33 +84,27 @@ public class MainActivity extends AppCompatActivity implements GlobalConstants {
     String[] productdesc, productprice;
     ArrayList<Product> arrayList = new ArrayList<Product>();
     private String TAG = "MAINACTIVITY";
-    Button btnmic;
+    private boolean isLoggedIn;
+
+    private FirebaseAuth mAuth;
+    // [END declare_auth]
+
+    // [START declare_auth_listener]
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    // [END declare_auth_listener]
+
+    private GoogleApiClient mGoogleApiClient;
+    User mUser;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        TextView txtsignIn=(TextView)findViewById(R.id.singIn);
+        context = this;
+        isLoggedIn = false;
 
-        txtsignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-                Toast.makeText(MainActivity.this,"Clicked",Toast.LENGTH_LONG).show();
-            }
-        });
-
-
-//        btnmic=(Button) findViewById(R.id.query_speech);
-//        btnmic.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                Toast.makeText(MainActivity.this,"Clicked",Toast.LENGTH_LONG).show();
-//            }
-//        });
         recyclerView = (RecyclerView) findViewById(R.id.rv_sponsoredlist);
         productdesc = getResources().getStringArray(R.array.productdesc);
         productprice = getResources().getStringArray(R.array.price);
@@ -101,8 +121,66 @@ public class MainActivity extends AppCompatActivity implements GlobalConstants {
 
         callFeaturedAPI();
 
+        // [START config_signin]
+        // Configure Google Sign In
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        // [END config_signin]
+
+        if(mGoogleApiClient==null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+                    .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                    .build();
+        }
+
+        // [START initialize_auth]
+        mAuth = FirebaseAuth.getInstance();
+        // [END initialize_auth]
+
+        // [START auth_state_listener]
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    isLoggedIn = true;
+                    mUser = new User(user.getDisplayName(), user.getEmail(), user.getPhotoUrl()+"", "Google");
+                    mUserText.setText(user.getDisplayName());
+                    mSignText.setText("Sign Out");
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    // User is signed out
+                    isLoggedIn = false;
+                    mUserText.setText("Guest");
+                    mSignText.setText("Sign In");
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+                // [START_EXCLUDE]
+//                TODO updateUI(user);
+                // [END_EXCLUDE]
+            }
+        };
+        // [END auth_state_listener]
+
       //  recyclerView.setAdapter(adapter);
 
+    }
+
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
     }
 
     private void callFeaturedAPI() {
@@ -146,6 +224,31 @@ public class MainActivity extends AppCompatActivity implements GlobalConstants {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
     }
+
+    @OnClick(R.id.singIn)
+    public void signInButton(){
+        if(!isLoggedIn) {
+            Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+            startActivityForResult(signInIntent, RC_SIGN_IN);
+        }else{
+            signOut();
+        }
+    }
+
+    private void signOut() {
+        // Firebase sign out
+        mAuth.signOut();
+
+        // Google sign out
+        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(@NonNull Status status) {
+                        //TODO updateUI(null);
+                    }
+                });
+    }
+
     @OnClick(R.id.search)
     public void searchAction() {
         String txt = mQueryView.getText().toString();
@@ -198,83 +301,33 @@ public class MainActivity extends AppCompatActivity implements GlobalConstants {
                 break;
             }
 
+            case RC_SIGN_IN: {
+                GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+                if (result.isSuccess()) {
+                    // Google Sign In was successful, authenticate with Firebase
+                    GoogleSignInAccount account = result.getSignInAccount();
+                    firebaseAuthWithGoogle(account);
+                } else {
+                    // Google Sign In failed, update UI appropriately
+                    // [START_EXCLUDE]
+                    // TODO updateUI(null);
+                    // [END_EXCLUDE]
+                }
+                break;
+            }
+
         }
     }
-
-    private void callAPI(String query) {
-        Call<ArrayList<Product>> call = CHEAPEST_PRICE_API.getProductList(query);
-        call.enqueue(new Callback<ArrayList<Product>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Product>> call, Response<ArrayList<Product>> response) {
-                Log.d("RETROFIT", "response.isSuccessful() >>>>> " + response.isSuccessful());
-                if (!response.isSuccessful()) {
-                    try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        Log.d("RETROFIT", "UPDATE DOCTOR RETROFIT FAILURE jObjError.getString(message) >>>>> " + jObjError.getString("message"));
-                        showToast(jObjError.getString("message"));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        showToast(e.getMessage());
-                    }
-                    return;
-                }
-                hideProgressDialog();
-                ArrayList<Product> products = response.body();
-                Log.d(TAG, "Number pf products >>> " + products.size());
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Product>> call, Throwable t) {
-                showToast("Sorry unable to fetch results");
-            }
-        });
-    }
-
-    private void callStringAPI(String query) {
-        Call<String> call = CHEAPEST_PRICE_API.getProductStringList(query);
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if (!response.isSuccessful()) {
-                    try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        Log.d("RETROFIT", "UPDATE DOCTOR RETROFIT FAILURE jObjError.getString(message) >>>>> " + jObjError.getString("message"));
-                        showToast(jObjError.getString("message"));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        showToast(e.getMessage());
-                    }
-                    return;
-                }
-                hideProgressDialog();
-                String s = response.body();
-                JsonObject jsonObject = new JsonParser().parse(s).getAsJsonObject();
-                Type listType = new TypeToken<List<Product>>() {
-                }.getType();
-                List<Product> myModelList = new Gson().fromJson(jsonObject.getAsJsonArray("products"), listType);
-                Log.d(TAG, "Number pf products >>> " + myModelList.size());
-                Log.d(TAG, "Number pf products string>>> " + s);
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                showToast("Sorry unable to fetch results");
-            }
-        });
-    }
-
-    ///Extra Method//
-
 
     private void showToast(String msg) {
         hideProgressDialog();
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 
-    public void showProgressDialog() {
+    public void showProgressDialog(String title) {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setMessage("Looking for best prices…");
+            mProgressDialog.setMessage(title);
             mProgressDialog.setIndeterminate(true);
         }
 
@@ -285,5 +338,46 @@ public class MainActivity extends AppCompatActivity implements GlobalConstants {
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
         }
+    }
+
+    // [START auth_with_google]
+    private void firebaseAuthWithGoogle(final GoogleSignInAccount acct) {
+        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+        // [START_EXCLUDE silent]
+        showProgressDialog("Please Wait...");
+        // [END_EXCLUDE]
+
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
+
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        hideProgressDialog();
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "signInWithCredential", task.getException());
+                            Toast.makeText(context, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        mUser = new User(acct.getDisplayName(), acct.getEmail(), acct.getPhotoUrl()+"", "Google");
+                        SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.login_user_file), Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString(getString(R.string.login_user), mUser.toJson(mUser));
+                        editor.apply();
+
+                        // [START_EXCLUDE]
+                        // [END_EXCLUDE]
+                    }
+                });
+    }
+    // [END auth_with_google]
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 }

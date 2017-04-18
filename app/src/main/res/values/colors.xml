@@ -7,4 +7,6 @@
     <color name="cpb_grey">#ffdedede</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+    <color name="transparent">#00ffffff</color>
+
 </resources>
