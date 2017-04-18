@@ -104,7 +104,6 @@ public class MainActivity extends AppCompatActivity implements GlobalConstants,
         ButterKnife.bind(this);
         context = this;
         isLoggedIn = false;
-
         recyclerView = (RecyclerView) findViewById(R.id.rv_sponsoredlist);
         productdesc = getResources().getStringArray(R.array.productdesc);
         productprice = getResources().getStringArray(R.array.price);
