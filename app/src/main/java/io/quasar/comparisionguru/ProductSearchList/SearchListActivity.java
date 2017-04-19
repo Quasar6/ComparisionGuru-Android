@@ -67,14 +67,6 @@ public class SearchListActivity extends AppCompatActivity implements GlobalConst
         recyclerView=(RecyclerView)findViewById(R.id.rv_searchlist);
         productdesc=getResources().getStringArray(R.array.productdesc);
         productprice=getResources().getStringArray(R.array.price);
-//        int i=0;
-//        for(String pname :productdesc)
-//        {
-//            Product dataprovider=new Product(pname,productprice[i]);
-//            arrayList.add(dataprovider);
-//            i++;
-//        }
-
 //        adapter=new SearchListRecyclerAdapter(arrayList,this);
         recyclerView.setHasFixedSize(true);
 
@@ -113,7 +105,8 @@ public class SearchListActivity extends AppCompatActivity implements GlobalConst
 
             @Override
             public void onFailure(Call<ArrayList<Product>> call, Throwable t) {
-                showToast("Soory unable to fetch results");
+                showToast("Sorry unable to fetch results");
+                Log.d(TAG, "ERROR >>> "+call.isExecuted());
                 mProgressBar.setVisibility(View.GONE);
 
             }
