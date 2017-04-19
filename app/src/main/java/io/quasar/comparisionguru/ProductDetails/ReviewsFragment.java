@@ -156,7 +156,7 @@ public class ReviewsFragment extends Fragment implements
         }
         mAdapter = new CommentListAdapter(comments, getActivity());
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
-        manager.setReverseLayout(true);
+        manager.setReverseLayout(false);
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(mAdapter);
         mProgressBar.setVisibility(View.GONE);

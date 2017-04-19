@@ -89,7 +89,11 @@ public class PriceFragment extends Fragment implements GlobalConstants{
         txtdesc=(TextView)view.findViewById(R.id.productdesc);
         txtprice=(TextView)view.findViewById(R.id.bestpricetext);
 
-        txtprice.setText(product.getPrice());
+        double pricedouble =  Double.parseDouble(product.getPrice());
+        pricedouble = Math.round(pricedouble * 100);
+        pricedouble = pricedouble/100;
+
+        txtprice.setText(String.valueOf(pricedouble));
         txtdesc.setText(product.getName());
 
         setImage(product);
