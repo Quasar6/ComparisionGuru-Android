@@ -50,16 +50,11 @@ public class SponsoredListRecyclerAdapter extends RecyclerView.Adapter<Sponsored
             holder.pname.setText(product.getName());
         }
 
-//        DecimalFormat form = new DecimalFormat("#.00");
-//        String FormattedText=form.format(product.getStore().toString());
-//        Toast.makeText(ctx,FormattedText,Toast.LENGTH_SHORT).show();
-
         double pricedouble =  Double.parseDouble(product.getPrice());
         pricedouble = Math.round(pricedouble * 100);
         pricedouble = pricedouble/100;
 
         holder.pprice.setText(String.valueOf(pricedouble));
-        //holder.pImage.setImageResource(product.getImageURL());
         String storename = product.getStore().toString();
 
         Glide.with(ctx).load(product.getImageURL()).error(Drawable.createFromPath("@drawable/default_image.jpeg")).into(holder.pImage);
