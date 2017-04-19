@@ -8,12 +8,21 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.widget.Toast;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import io.quasar.comparisionguru.Model.Product;
 import io.quasar.comparisionguru.R;
 import io.quasar.comparisionguru.SponsoredListRecyclerAdapter;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static io.quasar.comparisionguru.Global.GlobalConstants.CHEAPEST_PRICE_API;
 
 public class ProductDetails extends AppCompatActivity {
 
@@ -22,6 +31,7 @@ public class ProductDetails extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPagerAdapter viewPagerAdapter;
     boolean isFeatured;
+    Product product;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +41,7 @@ public class ProductDetails extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null){
             isFeatured = bundle.getBoolean("isFeatured", false);
+            product= (Product) bundle.getSerializable("Product");
         }
 
         toolbar=(Toolbar)findViewById(R.id.toolbar);
@@ -45,9 +56,35 @@ public class ProductDetails extends AppCompatActivity {
         }
         if(isFeatured){
             viewPagerAdapter.addFragments(new TrendFragment(),"Trends");
+        }else{
+            incrementCounter();
         }
         viewPagerAdapter.addFragments(new ReviewsFragment(),"Reviews");
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void incrementCounter(){
+        if(product==null){
+            return;
+        }
+        Call<String> call = CHEAPEST_PRICE_API.updateFeaturedList(product);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (!response.isSuccessful()) {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        Log.d("RETROFIT", "UPDATE DOCTOR RETROFIT FAILURE jObjError.getString(message) >>>>> " + jObjError.getString("message"));
+                    } catch (Exception e) {
+                    }
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+            }
+        });
     }
 }

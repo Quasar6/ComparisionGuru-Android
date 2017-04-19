@@ -27,7 +27,7 @@ public interface CheapestPrice {
     Call<ArrayList<Product>> getFeaturedList();
 
     @POST("products")
-    Call<String> updateFeaturedList();
+    Call<String> updateFeaturedList(@Body Product product);
 
     @POST("/products/review")
     @Headers("Content-Type: application/json")
